@@ -125,13 +125,13 @@ void node_step(void)
                 }
             }
             break;
-        case STATE_FAULT:
-            if (false) {   /* TODO reprise */
-                state = STATE_NORMAL;
-                filter_reset();
-                threshold_reset_counter();
-                last_filtered = filter_push(centi, valid);
-                emit(STATE_NORMAL, last_filtered);           /* reprise (EF-05) */
+         case STATE_FAULT:
+            if (fault_recover_ready()) {
+              state = STATE_NORMAL;
+              filter_reset();
+              threshold_reset_counter();
+              last_filtered = filter_push(centi, valid);
+              emit(STATE_NORMAL, last_filtered);  /* reprise (EF-05) */
             }
             break;
         default:
