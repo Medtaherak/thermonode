@@ -16,18 +16,23 @@ int32_t filter_push(int32_t centi, bool valid)
 {
     int32_t sum = 0;
     size_t i;
+
     if (valid) {
         window[head] = centi;
         head = (head + 1u) % FILTER_WINDOW;
+
         if (count < FILTER_WINDOW) {
             count++;
         }
     }
+
     if (count == 0u) {
         return 0;
     }
-    for (i = 0u; i <= count; i++) {
+
+    for (i = 0u; i < count; i++) {
         sum += window[i];
     }
+
     return sum / (int32_t)count;
 }
